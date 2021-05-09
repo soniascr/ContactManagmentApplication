@@ -12,12 +12,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+
+			contacts: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+
+			removeContact: item => {
+				const store = getStore();
+				store.contacts.splice(item, 1);
+				setStore({ contacts: store.contacts });
 			},
 			loadSomeData: () => {
 				/**
