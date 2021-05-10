@@ -12,26 +12,6 @@ export const ContactCard = data => {
 	const { id, full_name, address, email, phone } = data.data;
 	const { store, actions } = useContext(Context);
 
-	const handleDelete = event => {
-		let myHeaders = new Headers();
-
-		let url = `${apiBaseURL}/apis/fake/contact/${id}`;
-
-		console.log(phone);
-
-		var requestOptions = {
-			method: "DELETE",
-			headers: myHeaders,
-			body: data
-		};
-
-		fetch(url, requestOptions)
-			.then(response => response.json())
-			.then(result => {
-				window.location.reload();
-			});
-	};
-
 	let history = useHistory();
 	const handleEdit = event => {
 		localStorage.setItem("id", id);
@@ -71,7 +51,7 @@ export const ContactCard = data => {
 							</button>
 						</div>
 						<div className="col-md-1 mt-4">
-							<button className="close" onClick={() => handleDelete(event)}>
+							<button className="close" onClick={() => actions.handleDelete(event, id)}>
 								<i className="fas fa-trash" />
 							</button>
 						</div>

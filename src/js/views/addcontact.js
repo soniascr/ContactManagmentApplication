@@ -13,64 +13,10 @@ export const AddContact = () => {
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
 
-	const handleSubmit = event => {
-		event.preventDefault();
-
-		//let BuId = event.target.closest("form").querySelector("#formBusinessId").value;
-		let contact = {
-			full_name: fullName,
-			phone: phone,
-			address: address,
-			email: email,
-			agenda_slug: "sonia_chaves_agenda2353"
-		};
-
-		createContact(contact);
-	};
-
-	const createContact = contact => {
-		let myHeaders = new Headers();
-
-		let id = localStorage.getItem("id");
-
-		let url = "";
-		let urlMethod = "";
-		if (id != "") {
-			url = `${apiBaseURL}/apis/fake/contact/${id}`;
-			localStorage.setItem("id", "");
-			urlMethod = "PUT";
-		} else {
-			url = `${apiBaseURL}/apis/fake/contact/`;
-			urlMethod = "POST";
-		}
-		console.log("URL: " + url);
-
-		const data = new FormData();
-		for (let key in contact) {
-			data.append(key, contact[key]);
-			console.log("Key: " + key + ", Value: " + contact[key]);
-		}
-
-		var requestOptions = {
-			method: urlMethod,
-			headers: myHeaders,
-			body: data
-		};
-
-		console.log("Method: " + requestOptions.method);
-
-		fetch(url, requestOptions)
-			.then(response => response.json())
-			.then(result => {
-				alert("Contacto agregado correctamente");
-				console.log(result);
-			});
-	};
-
 	return (
 		<div className="container p-3">
 			<h1 className="text-center">Add a new contact </h1>
-			<Form onSubmit={handleSubmit}>
+			<Form>
 				<Form.Group controlId="formBasicName">
 					<Form.Label>Full Name</Form.Label>
 					<Form.Control
@@ -105,7 +51,7 @@ export const AddContact = () => {
 						onChange={event => setAddress(event.target.value)}
 					/>
 				</Form.Group>
-				<Button variant="primary" type="submit">
+				<Button variant="primary" onClick={() => actions.handleSubmit(event, fullName, phone, address, email)}>
 					save
 				</Button>
 			</Form>
