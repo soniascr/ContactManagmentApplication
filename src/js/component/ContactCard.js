@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../../styles/index.scss";
 import { apiBaseURL } from "../constants";
@@ -15,7 +15,9 @@ export const ContactCard = data => {
 	const handleDelete = event => {
 		let myHeaders = new Headers();
 
-		let url = `${apiBaseURL}/apis/fake/contact/`;
+		let url = `${apiBaseURL}/apis/fake/contact/${id}`;
+
+		console.log(phone);
 
 		var requestOptions = {
 			method: "DELETE",
@@ -26,8 +28,15 @@ export const ContactCard = data => {
 		fetch(url, requestOptions)
 			.then(response => response.json())
 			.then(result => {
-				console.log(result);
+				window.location.reload();
 			});
+	};
+
+	let history = useHistory();
+	const handleEdit = event => {
+		localStorage.setItem("id", id);
+
+		history.push("/addcontact");
 	};
 
 	return (
@@ -57,7 +66,7 @@ export const ContactCard = data => {
 							</div>
 						</div>
 						<div className="col-md-1 mt-4">
-							<button className="close">
+							<button className="close" onClick={() => handleEdit(event)}>
 								<i className="fas fa-pencil-alt" />
 							</button>
 						</div>

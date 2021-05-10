@@ -31,19 +31,33 @@ export const AddContact = () => {
 	const createContact = contact => {
 		let myHeaders = new Headers();
 
-		let url = `${apiBaseURL}/apis/fake/contact/`;
+		let id = localStorage.getItem("id");
+
+		let url = "";
+		let urlMethod = "";
+		if (id != "") {
+			url = `${apiBaseURL}/apis/fake/contact/${id}`;
+			localStorage.setItem("id", "");
+			urlMethod = "PUT";
+		} else {
+			url = `${apiBaseURL}/apis/fake/contact/`;
+			urlMethod = "POST";
+		}
+		console.log("URL: " + url);
 
 		const data = new FormData();
 		for (let key in contact) {
-			console.log(contact[key]);
 			data.append(key, contact[key]);
+			console.log("Key: " + key + ", Value: " + contact[key]);
 		}
-		console.log(contact);
+
 		var requestOptions = {
-			method: "POST",
+			method: urlMethod,
 			headers: myHeaders,
 			body: data
 		};
+
+		console.log("Method: " + requestOptions.method);
 
 		fetch(url, requestOptions)
 			.then(response => response.json())

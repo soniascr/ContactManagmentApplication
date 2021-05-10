@@ -22,11 +22,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-			removeContact: item => {
-				const store = getStore();
-				store.contacts.splice(item, 1);
-				setStore({ contacts: store.contacts });
-			},
 			loadSomeData: () => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
