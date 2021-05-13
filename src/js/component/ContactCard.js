@@ -46,12 +46,17 @@ export const ContactCard = data => {
 							</div>
 						</div>
 						<div className="col-md-1 mt-4">
-							<button className="close" onClick={() => handleEdit(event)}>
+							<button
+								className="close"
+								onClick={event => {
+									handleEdit(event);
+									console.log(id);
+								}}>
 								<i className="fas fa-pencil-alt" />
 							</button>
 						</div>
 						<div className="col-md-1 mt-4">
-							<button className="close" onClick={() => actions.handleDelete(event, id)}>
+							<button className="close" onClick={event => actions.handleDelete(event, id)}>
 								<i className="fas fa-trash" />
 							</button>
 						</div>

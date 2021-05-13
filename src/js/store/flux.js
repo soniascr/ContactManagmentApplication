@@ -25,6 +25,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			setContacts: contacts => {
+				setStore({ contacts: contacts });
+			},
+
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
@@ -58,8 +62,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					agenda_slug: "sonia_chaves_agenda2353"
 				};
 
-				let myHeaders = new Headers();
-
 				let id = localStorage.getItem("id");
 
 				let url = "";
@@ -74,16 +76,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				console.log("URL: " + url);
 
-				const data = new FormData();
-				for (let key in contact) {
-					data.append(key, contact[key]);
-					console.log("Key: " + key + ", Value: " + contact[key]);
-				}
-
 				var requestOptions = {
 					method: urlMethod,
-					headers: myHeaders,
-					body: data
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(contact)
 				};
 
 				console.log("Method: " + requestOptions.method);

@@ -8,7 +8,6 @@ import { Link, useHistory } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 export const Contact = () => {
-	const [contacts, setContacts] = useState([]);
 	const { store, actions } = useContext(Context);
 
 	useEffect(() => {
@@ -22,13 +21,11 @@ export const Contact = () => {
 
 		fetch(url, requestOptions)
 			.then(response => response.json())
-			.then(result => setContacts(result))
+			.then(result => actions.setContacts(result))
 			.catch(error => console.log("error", error));
 	}, []);
 
-	console.log(contacts);
-
-	let contactList = contacts.map((item, key) => (
+	let contactList = store.contacts.map((item, key) => (
 		<div className="col-md-12" key={key}>
 			<ContactCard data={item} />
 		</div>

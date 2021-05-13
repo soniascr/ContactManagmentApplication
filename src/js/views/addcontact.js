@@ -12,6 +12,10 @@ export const AddContact = () => {
 	const [address, setAddress] = useState("");
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
+	let id = localStorage.getItem("id");
+	console.log(id);
+	let contact = store.contacts.find(item => item.id == id);
+	console.log(contact, store.contacts);
 
 	return (
 		<div className="container p-3">
@@ -22,6 +26,7 @@ export const AddContact = () => {
 					<Form.Control
 						type="text"
 						placeholder="Full Name"
+						defaultValue={contact ? contact.full_name : ""}
 						onChange={event => setFullName(event.target.value)}
 					/>
 				</Form.Group>
@@ -31,6 +36,7 @@ export const AddContact = () => {
 					<Form.Control
 						type="email"
 						placeholder="Enter Email"
+						defaultValue={contact ? contact.email : ""}
 						onChange={event => setEmail(event.target.value)}
 					/>
 				</Form.Group>
@@ -40,6 +46,7 @@ export const AddContact = () => {
 					<Form.Control
 						type="text"
 						placeholder="Enter Phone"
+						defaultValue={contact ? contact.phone : ""}
 						onChange={event => setPhone(event.target.value)}
 					/>
 				</Form.Group>
@@ -48,10 +55,16 @@ export const AddContact = () => {
 					<Form.Control
 						type="text"
 						placeholder="Enter Address"
+						defaultValue={contact ? contact.address : ""}
 						onChange={event => setAddress(event.target.value)}
 					/>
 				</Form.Group>
-				<Button variant="primary" onClick={() => actions.handleSubmit(event, fullName, phone, address, email)}>
+				<Button
+					variant="primary"
+					onClick={() => {
+						actions.handleSubmit(event, fullName, phone, address, email);
+						console.log(fullName, address, email, phone);
+					}}>
 					save
 				</Button>
 			</Form>
